@@ -52,17 +52,17 @@ public class Server extends Thread
                 if (txt.contains("ADD")) {
                     final String[] tosplit = txt.split(" ");
                     this.canDao.addCandidate(tosplit[1], tosplit[2], tosplit[3], tosplit[4], Integer.parseInt(tosplit[5]));
-                    this.arr.write(this.canDao.getCan());
+                    this.arr.write(this.canDao.getList());
                 }
                 if (txt.contains("UPD")) {
                     final String[] tosplit = txt.split(" ");
                     this.canDao.updateCandidate(tosplit[1], tosplit[2], tosplit[4], tosplit[3], Integer.parseInt(tosplit[5]));
-                    this.arr.write(this.canDao.getCan());
+                    this.arr.write(this.canDao.getList());
                 }
                 if (txt.contains(txt)) {
                     final String[] tosplit = txt.split(" ");
                     this.canDao.deleteCandidate(tosplit[4]);
-                    this.arr.write(this.canDao.getCan());
+                    this.arr.write(this.canDao.getList());
                 }
             }
         }

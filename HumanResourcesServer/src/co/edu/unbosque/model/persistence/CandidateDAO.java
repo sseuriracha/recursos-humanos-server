@@ -16,7 +16,7 @@ import co.edu.unbosque.model.CandidateDTO;
 public class CandidateDAO {
 	
 	private CandidateFile archivo;
-	private CandidateDTO list;
+	private ArrayList<CandidateDTO> list;
 	
 	/**
 	 * Constructor of the CandidateDAO class. Creates a CandidateFile object that will be used on CRUD operations.
@@ -58,14 +58,13 @@ public class CandidateDAO {
 	 * @return true-or-false value on whether the candidate has been succesfully added or not.
 	 */
 	
-	public boolean addCandidate(String nombre, String apellido, String cargo, String cedula, int edad,
-			ArrayList<CandidateDTO> lst) {
+	public boolean addCandidate(String nombre, String apellido, String cargo, String cedula, int edad) {
 
 		CandidateDTO toadd = new CandidateDTO(nombre, apellido, cedula, cargo, edad);
 		
-		if (searchCandidate(cedula, lst) == null && cedula.matches("[0-9]+") && cedula.length() > 2) {
-			lst.add(toadd);
-			archivo.write(lst);
+		if (searchCandidate(cedula, list) == null && cedula.matches("[0-9]+") && cedula.length() > 2) {
+			list.add(toadd);
+			archivo.write(list);
 			JOptionPane.showMessageDialog(null, "Agregado correctamente");
 			return true;
 		} else {
@@ -80,17 +79,17 @@ public class CandidateDAO {
 	 * @param lst list of candidates
 	 */
 	
-	public void deleteCandidate(String cedula, ArrayList<CandidateDTO> lst) {
+	public void deleteCandidate(String cedula) {
 		
 		if (cedula.matches("[0-9]+") && cedula.length() > 2) {
 			if (!cedula.equals("")) {
-				if (searchCandidate(cedula, lst) != null) {
+				if (searchCandidate(cedula, list) != null) {
 					try {
-						CandidateDTO todelete = searchCandidate(cedula, lst);
-						lst.remove(todelete);
+						CandidateDTO todelete = searchCandidate(cedula, list);
+						list.remove(todelete);
 						archivo.getArchivo().delete();
 						archivo.getArchivo().createNewFile();
-						archivo.write(lst);
+						archivo.write(list);
 						JOptionPane.showMessageDialog(null, "El candidato se elimino correctamente");
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -115,11 +114,11 @@ public class CandidateDAO {
 	 * @param lst list of candidates
 	 */
 	
-	public void updateCandidate (String newname, String newlast, String id, String newpos, int newage, ArrayList<CandidateDTO> lst) {
+	public void updateCandidate (String newname, String newlast, String id, String newpos, int newage) {
 		if (!id.equals("")) {
-			if (searchCandidate(id, lst) != null && id.matches("[0-9]+")) {
+			if (searchCandidate(id, list) != null && id.matches("[0-9]+")) {
 				try {
-					CandidateDTO toupdate = searchCandidate(id, lst);
+					CandidateDTO toupdate = searchCandidate(id, list);
 					toupdate.setName(newname);
 					toupdate.setLastname(newlast);
 					toupdate.setPosition(newpos);
@@ -134,5 +133,17 @@ public class CandidateDAO {
 			JOptionPane.showMessageDialog(null, "Revise el numero de cedula");
 		}
 	}
+
+
+	public ArrayList<CandidateDTO> getList() {
+		return list;
+	}
+
+
+	public void setList(ArrayList<CandidateDTO> list) {
+		this.list = list;
+	}
+	
+	
 	
 }
