@@ -4,9 +4,8 @@
 
 package co.edu.unbosque.controller;
 
-public class AplMain
-{
-    public static void main(final String[] args) {
-        final Controller cont = new Controller();
-    }
+public class AplMain {
+	public static void main(final String[] args) {
+		final Controller cont = new Controller();
+	}
 }
